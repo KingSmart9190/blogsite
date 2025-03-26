@@ -15,13 +15,18 @@ async function fetchBlogs() {
             fetch('https://dev.to/api/articles?per_page=5').then(res => res.json())
         ]);
 
+        const topics = [
+            "Programming", "Self Improvement", "Data Science",
+            "Writing", "Relationships", "Technology", "Politics"
+        ];
+
         let blogs = [];
 
         // Format API 1 (JSONPlaceholder) Blogs
-        api1.slice(0, 5).forEach(blog => {
+        api1.slice(0, 5).forEach((blog, index) => {
             blogs.push({
                 id: blog.id,
-                title: blog.title,
+                title: topics[index % topics.length], // Use predefined topics
                 description: blog.body,
                 imageQuery: "technology",
                 date: new Date().toDateString(),
@@ -32,10 +37,10 @@ async function fetchBlogs() {
         });
 
         // Format API 2 (Dev.to) Blogs
-        api2.forEach(blog => {
+        api2.forEach((blog, index) => {
             blogs.push({
                 id: blog.id,
-                title: blog.title,
+                title: topics[index % topics.length], // Use predefined topics
                 description: blog.description || "No description available.",
                 imageQuery: "coding",
                 date: blog.published_at.split('T')[0],
@@ -59,25 +64,33 @@ async function fetchBlogs() {
     }
 }
 
+
 // Fetch images from Pexels based on keywords
 async function fetchBlogImages(blogs) {
-    return Promise.all(
-        blogs.map(async (blog) => {
+    const updatedBlogs = await Promise.all(
+        blogs.map(async blog => {
             try {
                 const response = await fetch(
                     `https://api.pexels.com/v1/search?query=${blog.imageQuery}&per_page=1`,
                     { headers: { Authorization: PEXELS_API_KEY } }
                 );
                 const data = await response.json();
-                blog.image = data.photos[0]?.src?.medium || 'https://via.placeholder.com/600x400';
+                return {
+                    ...blog, // Keep the original blog data
+                    image: data.photos[0]?.src?.medium || 'https://via.placeholder.com/600x400' // Add/replace the image
+                };
             } catch (error) {
                 console.error("Error fetching images:", error);
-                blog.image = 'https://via.placeholder.com/600x400'; // Fallback image
+                return {
+                    ...blog, // Keep the original blog data
+                    image: 'https://via.placeholder.com/600x400' // Fallback image
+                };
             }
-            return blog;
         })
     );
+    return updatedBlogs;
 }
+
 
 // Render blog list
 function renderBlogList(blogs) {
