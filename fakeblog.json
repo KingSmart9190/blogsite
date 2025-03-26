@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "title": "Exploring AI Innovations",
+        "description": "AI is shaping the future of technology and daily life.",
+        "imageQuery": "AI",
+        "date": "2025-03-25",
+        "views": 4500,
+        "comments": 150,
+        "fullContentUrl": "https://example.com/blogs/ai-innovations"
+    },
+    {
+        "id": 2,
+        "title": "Understanding Quantum Computing",
+        "description": "A deep dive into the next frontier of computation.",
+        "imageQuery": "Quantum Computing",
+        "date": "2025-03-26",
+        "views": 3200,
+        "comments": 90,
+        "fullContentUrl": "https://example.com/blogs/quantum-computing"
+    }
+]

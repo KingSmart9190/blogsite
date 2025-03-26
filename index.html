@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medium Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Medium</h1>
+        <input type="text" placeholder="Search">
+        <div class="user-profile"></div>
+    </header>
+
+    <main>
+        <section class="blog-feed">
+            <nav class="tabs">
+                <span class="tab active" onclick="fetchBlogs('for-you')">For You</span>
+                <span class="tab" onclick="fetchBlogs('following')">Following</span>
+                <span class="tab" onclick="fetchBlogs('featured')">Featured</span>
+            </nav>
+            <div id="blog-list"></div>
+        </section>
+
+        <section id="blog-details" style="display: none;"></section>
+        <button id="back-button" onclick="goBack()" style="display: none;">Back</button>
+
+        <aside class="sidebar">
+            <h3>Recommended topics</h3>
+            <div class="tags">
+                <a href="#" onclick="fetchBlogsByTopic('Programming')">Programming</a>
+                <a href="#" onclick="fetchBlogsByTopic('Self Improvement')">Self Improvement</a>
+                <a href="#" onclick="fetchBlogsByTopic('Data Science')">Data Science</a>
+                <a href="#" onclick="fetchBlogsByTopic('Writing')">Writing</a>
+                <a href="#" onclick="fetchBlogsByTopic('Relationships')">Relationships</a>
+                <a href="#" onclick="fetchBlogsByTopic('Technology')">Technology</a>
+                <a href="#" onclick="fetchBlogsByTopic('Politics')">Politics</a>
+            </div>
+        </aside>
+    </main>
+
+    <script src="blog.js"></script>
+</body>
+</html>
