@@ -8,17 +8,27 @@ let allBlogs = []; // Store all blogs for searching
 let allTopics = []; // Store all topic cards for searching
 
 // Fetch blogs from two English sources
-async function fetchBlogs() {
+async function fetchBlogs(category = "") {
     try {
         const [api1, api2] = await Promise.all([
             fetch('https://jsonplaceholder.typicode.com/posts').then(res => res.json()),
             fetch('https://dev.to/api/articles?per_page=5').then(res => res.json())
         ]);
 
-        const topics = [
-            "Programming", "Self Improvement", "Data Science",
-            "Writing", "Relationships", "Technology", "Politics"
-        ];
+        let topics;
+        switch (category) {
+            case "for-you":
+            topics = ["AI & Robotics", "Quantum Computing", "Blockchain Innovations", "Future of Work", "Space Exploration"];
+            break;
+            case "featured":
+            topics = ["Health & Wellness", "Travel Diaries", "Culinary Arts", "Photography", "Creative Writing"];
+            break;
+            case "following":
+            topics = ["Gaming", "Technology", "Wealth", "Scenery", "Education"];
+            break;
+            default:
+            topics = ["Programming", "Self Improvement", "Data Science", "Writing", "Relationships", "Technology", "Politics"];
+        }
 
         let blogs = [];
 
